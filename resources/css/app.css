@@ -1,3 +1,14 @@
 .login-wrapper {
     transform: translate(12%, 70%);
 }
+.home-btn {
+    margin-top: 50px;
+}
+
+table.home-table {
+    margin-top: 20px;
+}
+
+.author-books {
+    margin-top: 20px;
+}
