@@ -1,17 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    @vite(['resources/css/app.css'])
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
-</head>
-<body>
+@extends('welcome')
+
+@section('content')
 <div class="home-btn container">
-    <button type="button" class="btn btn-primary">Войти как Автор</button>
-    <button type="button" class="btn btn-secondary">Войти как Администратор</button>
+    <a href="{{ url('/authors-login') }}" type="button" class="btn btn-primary">Войти как Автор</a>
+    <a  type="button" class="btn btn-secondary">Войти как Администратор</a>
     <div class="author-books input-group mb-3">
         <input type="text" class="form-control" placeholder="Введите Автора" aria-label="Recipient's username" aria-describedby="button-addon2">
         <button class="btn btn-outline-secondary" type="button" id="button-addon2">Найти книги</button>
@@ -28,31 +20,19 @@
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Имя</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th scope="col">Название</th>
+            <th scope="col">Жанр</th>
+            <th scope="col">Автор</th>
         </tr>
         </thead>
         <tbody>
+        @foreach($books as $book)
         <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
+            <th scope="row">{{ $book->id }}</th>
+            <td>{{ $book->title }}</td>
             <td>@mdo</td>
         </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
-        </tr>
-        </tbody>
+        @endforeach
     </table>
 </div>
-</body>
-</html>
+@endsection
