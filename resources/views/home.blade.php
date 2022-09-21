@@ -19,7 +19,7 @@
     <table class="home-table table">
         <thead>
         <tr>
-            <th scope="col">#</th>
+            <th scope="col">ID</th>
             <th scope="col">Название</th>
             <th scope="col">Жанр</th>
             <th scope="col">Автор</th>
@@ -30,7 +30,12 @@
         <tr>
             <th scope="row">{{ $book->id }}</th>
             <td>{{ $book->title }}</td>
-            <td>@mdo</td>
+            <td>
+                @foreach($book->genre as $genre)
+                    {{ $genre->name }}
+                @endforeach
+            </td>
+            <td>{{ $book->author->name }}</td>
         </tr>
         @endforeach
     </table>
