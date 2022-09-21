@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Author;
 use Illuminate\Http\Request;
+use Ramsey\Uuid\Type\Integer;
+use function Spatie\Ignition\ErrorPage\jsonEncode;
 
 class HomeController extends Controller
 {
@@ -16,8 +18,6 @@ class HomeController extends Controller
     public function index()
     {
         $books = Book::get();
-
-        // dd($book);
         return view('home', compact('books'));
     }
 
@@ -35,22 +35,55 @@ class HomeController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
-        //
+        $books = Book::get();
+        $property = $request->all();
+        $result = array();
+        if (isset($property['author'])) {
+            foreach ($books as $book) {
+                if ($property['author'] == $book->author->name) {
+                    $genre = $book->genre;
+                    array_push($result, $book);
+                }
+            }
+        }
+        if (isset($property['bookId'])) {
+            foreach ($books as $book) {
+                if ($property['bookId'] == $book->id) {
+                    $author = $book->author->name;
+                    array_push($result, $book);
+                }
+            }
+        }
+        if (isset($property['countBooks'])) {
+            if (isset($property['authorName'])) {
+                $count = 0;
+                foreach ($books as $book) {
+                    if ($count != intval($property['countBooks'])) {
+                        if ($property['authorName'] == $book->author->name) {
+                            $genre = $book->genre;
+                            array_push($result, $book);
+                            $count += 1;
+                        }
+                    }
+                }
+            }
+        }
+        return response()->json($result);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  \App\Models\Author  $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function show(Author $user)
     {
-        //
+        return view('home');
     }
 
     /**

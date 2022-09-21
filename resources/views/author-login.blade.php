@@ -1,7 +1,7 @@
 @extends('welcome')
 
 @section('content')
-<form class="author-login mt-3">
+<form class="author-login mt-3" method="POST">
     <div class="container col-sm-3">
         <div class="login-wrapper">
             <div class="row mb-3">
