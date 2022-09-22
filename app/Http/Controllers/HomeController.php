@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
-use App\Models\Author;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Ramsey\Uuid\Type\Integer;
-use function Spatie\Ignition\ErrorPage\jsonEncode;
 
 class HomeController extends Controller
 {
@@ -39,6 +37,7 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
+        /*
         $books = Book::get();
         $property = $request->all();
         $result = array();
@@ -73,15 +72,16 @@ class HomeController extends Controller
             }
         }
         return response()->json($result);
+        */
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Author  $user
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function show(Author $user)
+    public function show(User $user)
     {
         return view('home');
     }
@@ -89,10 +89,10 @@ class HomeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Author  $user
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Author $user)
+    public function edit(User $user)
     {
         //
     }
@@ -101,10 +101,10 @@ class HomeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Author  $user
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Author $user)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -112,10 +112,10 @@ class HomeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Author  $user
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Author $user)
+    public function destroy(User $user)
     {
         //
     }

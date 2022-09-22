@@ -2,8 +2,6 @@
 
 @section('content')
 <div class="home-btn container">
-    <a href="{{ url('/authors-login') }}" type="button" class="btn btn-primary">Войти как Автор</a>
-    <a  type="button" class="btn btn-secondary">Войти как Администратор</a>
     <form method="POST" action="{{ url('/store') }}">
         @csrf
         <div class="author-books input-group mb-3">

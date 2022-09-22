@@ -40,11 +40,15 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api' => [
+            'driver' => 'passport',
+            'provider' => 'users',
+        ],
     ],
 
     /*
     |--------------------------------------------------------------------------
-    | Author Providers
+    | User Providers
     |--------------------------------------------------------------------------
     |
     | All authentication drivers have a user provider. This defines how the
@@ -62,7 +66,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Author::class,
+            'model' => App\Models\User::class,
         ],
 
         // 'users' => [

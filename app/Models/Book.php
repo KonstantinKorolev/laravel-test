@@ -9,9 +9,18 @@ class Book extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'title'
+    ];
+
     public function author()
     {
-        return $this->belongsTo(Author::class, 'author_id', 'id');
+        return $this->belongsTo(User::class, 'author_id', 'id');
     }
 
     public function genre()
