@@ -5,8 +5,6 @@ namespace App\Http\Controllers\API;
 use App\Models\Book;
 use App\Http\Controllers\API\BaseController as BaseController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use function Symfony\Component\HttpKernel\HttpCache\save;
 
 class BookController extends BaseController
 {
