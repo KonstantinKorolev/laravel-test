@@ -1,10 +1,9 @@
 <?php
 
+use App\Http\Controllers\API\AuthorController;
 use App\Http\Controllers\API\BookController;
 use App\Http\Controllers\API\RegisterController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use PharIo\Manifest\AuthorCollection;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,10 +16,6 @@ use PharIo\Manifest\AuthorCollection;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::middleware('api')->group(function() {
     Route::resource('/register', RegisterController::class);
 });
@@ -30,5 +25,5 @@ Route::middleware('api')->group(function() {
 });
 
 Route::middleware('auth:api')->group(function() {
-    Route::resource('/author', AuthorCollection::class);
+    Route::resource('/author', AuthorController::class);
 });

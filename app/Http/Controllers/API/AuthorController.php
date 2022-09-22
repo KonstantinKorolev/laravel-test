@@ -1,20 +1,23 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\API\BaseController;
+use App\Models\Book;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class AuthorController extends Controller
+class AuthorController extends BaseController
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        //
+        $books = Book::all();
+        return $this->sendResponse($books->toArray(), 200);
     }
 
     /**

@@ -17,10 +17,6 @@ class BookController extends BaseController
     {
         $books = Book::all();
 
-        foreach ($books as $book) {
-            $book->author_name = $book->author->name;
-        }
-
         return $this->sendResponse($books->toArray(), 'Books retrieved successfully');
     }
 
@@ -47,9 +43,21 @@ class BookController extends BaseController
         $result = array();
         // если есть данные об авторе
         if (isset($property['author'])) {
-            foreach ($books as $book) {
-                if ($property['author'] == $book->author->name) {
-                    array_push($result, $book);
+            if (isset($property['countBooks'])) {
+                $count = 0;
+                if ($count != intval($property['countBooks'])) {
+                    foreach ($books as $book) {
+                        if ($property['author'] == $book->author->name) {
+                            array_push($result, $book);
+                            $count += 1;
+                        }
+                    }
+                }
+            } elseif (!isset($property['countBooks'])) {
+                foreach ($books as $book) {
+                    if ($property['author'] == $book->author->name) {
+                        array_push($result, $book);
+                    }
                 }
             }
         }
