@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Genre;
+use App\Models\Book;
 use Illuminate\Http\Request;
 
-class GenreController extends Controller
+class BookAdminController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class GenreController extends Controller
      */
     public function index()
     {
-        $genres = Genre::all();
-        return view('genre', compact('genres'));
+        $books = Book::get();
+        return view('home', compact('books'));
     }
 
     /**
@@ -25,69 +25,70 @@ class GenreController extends Controller
      */
     public function create()
     {
-        return view('form-genres');
+        return view('form-book');
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|string
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
         $input = $request->all();
-        Genre::create($input);
-        return redirect()->route('home.genres');
+        Book::create($input);
+        return redirect()->route('home.main');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Genre  $genre
+     * @param  \App\Models\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function show(Genre $genre)
+    public function show(Book $book)
     {
-        dd($genre);
+        dd($book);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Genre  $genre
+     * @param  \App\Models\Book  $book
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit(Genre $genre)
+    public function edit(Book $book)
     {
-        return view('form-genres', compact('genre'));
+        return view('form-book', compact('book'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Genre  $genre
+     * @param  \App\Models\Book  $book
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Genre $genre)
+    public function update(Request $request, Book $book)
     {
         $input = $request->all();
-        $genre->name = $input['name'];
-        $genre->save();
+        $book->title = $input['title'];
+        $book->author_id = $input['author_id'];
+        $book->save();
 
-        return redirect()->route('home.genres');
+        return redirect()->route('home.main');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Genre  $genre
+     * @param  \App\Models\Book  $book
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Genre $genre)
+    public function destroy(Book $book)
     {
-        $genre->delete();
-        return redirect()->route('home.genres');
+        $book->delete();
+        return redirect()->route('home.main');
     }
 }

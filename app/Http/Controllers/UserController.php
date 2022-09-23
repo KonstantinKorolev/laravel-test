@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Genre;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\API\BaseController as BaseController;
 
-class GenreController extends Controller
+class UserController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +16,8 @@ class GenreController extends Controller
      */
     public function index()
     {
-        $genres = Genre::all();
-        return view('genre', compact('genres'));
+        $users = User::all();
+        return view('author', compact('users'));
     }
 
     /**
@@ -25,69 +27,80 @@ class GenreController extends Controller
      */
     public function create()
     {
-        return view('form-genres');
+        return view('form-author');
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|string
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+
         $input = $request->all();
-        Genre::create($input);
-        return redirect()->route('home.genres');
+        User::create($input);
+        return redirect()-route('home.authors');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Genre  $genre
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Genre $genre)
+    public function show(User $user)
     {
-        dd($genre);
+        dd($user);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Genre  $genre
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit(Genre $genre)
+    public function edit(User $user)
     {
-        return view('form-genres', compact('genre'));
+        return view('form-author', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Genre  $genre
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Genre $genre)
+    public function update(Request $request, User $user)
     {
         $input = $request->all();
-        $genre->name = $input['name'];
-        $genre->save();
+        $user->name = $input['name'];
+        $user->email = $input['email'];
+        $user->save();
 
-        return redirect()->route('home.genres');
+        return redirect()->route('home.authors');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Genre  $genre
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Genre $genre)
+    public function destroy(User $user)
     {
-        $genre->delete();
-        return redirect()->route('home.genres');
+        $user->delete();
+        return redirect()->route('home.authors');
     }
 }

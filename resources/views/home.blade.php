@@ -4,11 +4,14 @@
 
 @section('content')
 <div class="home-btn container">
-    <form method="POST" action="{{ url('/store') }}">
+    <form method="POST" action="{{ route('home.store') }}">
         @csrf
         <div class="wrapper mt-3">
-            <a href="{{ url('/authors') }}" type="button" class="btn btn-primary">Вывести Авторов</a>
-            <a href="{{ url('/genres') }}" type="button" class="btn btn-primary">Вывести жанры</a>
+            <a href="{{ route('home.authors') }}" type="button" class="btn btn-primary">Вывести Авторов</a>
+            <a href="{{ route('home.genres') }}" type="button" class="btn btn-primary">Вывести жанры</a>
+            <a href="{{ route('authors.create') }}" type="button" class="btn btn-success">Создать автора</a>
+            <a href="{{ route('genres.create') }}" type="button" class="btn btn-success">Создать жанр</a>
+            <a href="{{ route('books.create') }}" type="button" class="btn btn-success">Создать книгу</a>
         </div>
         <div class="author-books input-group mb-3">
             <input type="text" name="author_name" class="form-control"  placeholder="Введите Автора" aria-label="Recipient's username" aria-describedby="button-addon3">
@@ -28,6 +31,7 @@
             <th scope="col">Название</th>
             <th scope="col">Жанр</th>
             <th scope="col">Автор</th>
+            <th scope="col">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -42,6 +46,14 @@
                         @endforeach
                     </td>
                     <td>{{ $book->author->name }}</td>
+                    <td>
+                        <form method="POST" action="{{ route('books.delete', $book) }}">
+                            @csrf
+                            @method('DELETE')
+                            <a type="button" class="btn btn-warning" href="{{ route('books.edit', $book) }}">Edit</a>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
                 </tr>
             @endforeach
         @endif
@@ -56,6 +68,14 @@
                         @endforeach
                     </td>
                     <td>{{ $book->author->name }}</td>
+                    <td>
+                        <form method="POST" action="{{ route('books.delete', $book) }}">
+                            @csrf
+                            @method('DELETE')
+                            <a type="button" class="btn btn-warning" href="{{ route('books.edit', $book) }}">Edit</a>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
                 </tr>
             @endforeach
         @endif
