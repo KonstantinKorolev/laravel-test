@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GenreController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index']);
+
+Route::post('/store', [HomeController::class, 'store']);
+
+Route::get('/genres', [GenreController::class, 'index']);

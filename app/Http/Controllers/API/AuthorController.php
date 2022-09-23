@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\API\BaseController;
 use App\Models\Book;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AuthorController extends BaseController
 {
@@ -17,7 +18,7 @@ class AuthorController extends BaseController
     public function index()
     {
         $books = Book::all();
-        return $this->sendResponse($books->toArray(), 200);
+        return $this->sendResponse($books, 200);
     }
 
     /**
@@ -66,13 +67,36 @@ class AuthorController extends BaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $author
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param User $author
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, User $author)
     {
-        //
+        $input = $request->all();
+
+        $authAuthorId = Auth::user()->id;
+        $authorId = $author->id;
+
+        if (intval($authAuthorId) == intval($authorId)) {
+            $validator = Validator::make($input, [
+                'name' => 'required',
+                'email' => 'required|email',
+                'password' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                return $this->sendError('Validation Error', $validator->errors());
+            }
+            $author->name = $input['name'];
+            $author->email = $input['email'];
+            $author->password = $input['password'];
+            $author->save();
+
+            return $this->sendResponse($author->toArray(), 'Author updated successfully');
+        }
+
+        return $this->sendError("Error", 'You cannot change the data of other authors');
     }
 
     /**

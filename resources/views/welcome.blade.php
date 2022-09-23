@@ -25,6 +25,11 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
     </head>
     <body class="antialiased">
-        @yield('content')
+        <div class="container">
+            <h1>@yield('title')</h1>
+            <main>
+                @yield('content')
+            </main>
+        </div>
     </body>
 </html>

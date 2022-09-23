@@ -21,8 +21,8 @@ return new class extends Migration
             $table->index('book_id', 'post_genre_book_idx');
             $table->index('genre_id', 'post_book_genre_idx');
 
-            $table->foreign('book_id', 'post_genre_book_fk')->on('books')->references('id');
-            $table->foreign('genre_id', 'post_book_genre_fk')->on('genres')->references('id');
+            $table->foreign('book_id', 'post_genre_book_fk')->on('books')->references('id')->onDelete('cascade');
+            $table->foreign('genre_id', 'post_book_genre_fk')->on('genres')->references('id')->onDelete('cascade');
             $table->timestamps();
         });
     }

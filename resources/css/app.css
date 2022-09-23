@@ -1,9 +1,9 @@
-.login-wrapper {
-    transform: translate(12%, 70%);
-}
-
 table.home-table {
     margin-top: 20px;
+}
+
+h1 {
+    padding-left: 12px;
 }
 
 .author-books {

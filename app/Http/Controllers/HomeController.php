@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\API\BaseController as BaseController;
 use App\Models\Book;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class HomeController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -33,37 +34,19 @@ class HomeController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function store(Request $request)
     {
-        /*
         $books = Book::get();
         $property = $request->all();
         $result = array();
-        if (isset($property['author'])) {
-            foreach ($books as $book) {
-                if ($property['author'] == $book->author->name) {
-                    $genre = $book->genre;
-                    array_push($result, $book);
-                }
-            }
-        }
-        if (isset($property['bookId'])) {
-            foreach ($books as $book) {
-                if ($property['bookId'] == $book->id) {
-                    $author = $book->author->name;
-                    array_push($result, $book);
-                }
-            }
-        }
-        if (isset($property['countBooks'])) {
-            if (isset($property['authorName'])) {
+        if (isset($property['count_books'])) {
+            if (isset($property['author_name'])) {
                 $count = 0;
                 foreach ($books as $book) {
-                    if ($count != intval($property['countBooks'])) {
-                        if ($property['authorName'] == $book->author->name) {
-                            $genre = $book->genre;
+                    if ($count != intval($property['count_books'])) {
+                        if ($property['author_name'] == $book->author->name) {
                             array_push($result, $book);
                             $count += 1;
                         }
@@ -71,8 +54,22 @@ class HomeController extends Controller
                 }
             }
         }
-        return response()->json($result);
-        */
+        if (isset($property['book_genres'])) {
+            if (isset($property['author_name'])) {
+                $genres = explode(" ", $property['book_genres']);
+                foreach ($books as $book) {
+                    if ($property['author_name'] == $book->author->name) {
+                        foreach ($book->genre as $item) {
+                            if (in_array($item->name, $genres)) {
+                                array_push($result, $book);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return view('home', compact('result'));
     }
 
     /**
