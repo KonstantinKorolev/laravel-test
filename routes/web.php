@@ -35,7 +35,7 @@ Route::post('authors/store', [UserController::class, 'store'])->name('authors.st
 
 Route::get('authors/edit/{user}', [UserController::class, 'edit'])->name('authors.edit');
 
-Route::post('authors/update/{user}', [UserController::class, 'update'])->name('authors.update');
+Route::put('authors/update/{user}', [UserController::class, 'update'])->name('authors.update');
 
 Route::delete('author/update/{user}', [UserController::class, 'destroy'])->name('authors.delete');
 
@@ -47,7 +47,7 @@ Route::post('genres/store', [GenreController::class, 'store'])->name('genres.sto
 
 Route::get('genres/edit/{genre}', [GenreController::class, 'edit'])->name('genres.edit');
 
-Route::post('genres/update/{genre}', [GenreController::class, 'update'])->name('genres.update');
+Route::put('genres/update/{genre}', [GenreController::class, 'update'])->name('genres.update');
 
 Route::delete('genres/update/{genre}', [GenreController::class, 'destroy'])->name('genres.delete');
 
@@ -59,6 +59,6 @@ Route::post('books/store', [BookAdminController::class, 'store'])->name('books.s
 
 Route::get('books/edit/{book}', [BookAdminController::class, 'edit'])->name('books.edit');
 
-Route::post('books/update/{book}', [BookAdminController::class, 'update'])->name('books.update');
+Route::put('books/update/{book}', [BookAdminController::class, 'update'])->name('books.update');
 
 Route::delete('books/update/{book}', [BookAdminController::class, 'destroy'])->name('books.delete');

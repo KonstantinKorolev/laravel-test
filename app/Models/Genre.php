@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Genre extends Model
 {
@@ -11,13 +12,9 @@ class Genre extends Model
 
     protected $guarded = [];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    public function books(): HasMany
+    {
+        return $this->hasMany(BookGenre::class, 'genre_id', 'id');
+    }
+
 }
